@@ -21,6 +21,7 @@ class App extends React.Component {
     const country = e.target.elements.country.value;
     const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?APPID=${API_KEY}&q=${city},${country}&units=metric`);
     const data = await api_call.json();
+    if (city && country){
     this.setState({
       city: data.name,
       country: data.sys.country,
@@ -28,18 +29,25 @@ class App extends React.Component {
       humidity: data.main.humidity,
       description: data.weather[0].description,
       error: "",
-    }, () => {
-      console.log(this.state.data);
+    })
+  } else {
+    this.setState({
+      city: null,
+      country: null,
+      temperature: null,
+      humidity: null,
+      description: null,
+      error: "No values entered",
     })
   }
-
+}
   render () {
     return (
       <div>
         <Header />
         <Form getWeather = {this.getWeather}/>
         {
-          this.state.city ?
+          this.state.city && this.state.country ?
           <Weather
             temperature={this.state.temperature}
             city={this.state.city}
