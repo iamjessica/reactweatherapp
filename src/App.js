@@ -29,7 +29,7 @@ class App extends React.Component {
       humidity: data.main.humidity,
       description: data.weather[0].description,
       error: "",
-    })
+    },() => console.log('this.state',this.state))
   } else {
     this.setState({
       city: null,
@@ -38,7 +38,7 @@ class App extends React.Component {
       humidity: null,
       description: null,
       error: "No values entered",
-    })
+    }, () => console.log('this.state',this.state))
   }
 }
   render () {
@@ -46,8 +46,6 @@ class App extends React.Component {
       <div>
         <Header />
         <Form getWeather = {this.getWeather}/>
-        {
-          this.state.city && this.state.country ?
           <Weather
             temperature={this.state.temperature}
             city={this.state.city}
@@ -56,9 +54,6 @@ class App extends React.Component {
             description={this.state.description}
             error={this.state.error}
              />
-           :
-           null
-         }
       </div>
     );
   }
